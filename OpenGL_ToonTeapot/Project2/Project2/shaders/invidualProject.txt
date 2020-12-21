@@ -1,0 +1,13 @@
+
+
+map:
+procedurally generated
+
+
+
+AI behaviours
+-seek
+-follow behaviours
+-flocking 
+
+-network for game
