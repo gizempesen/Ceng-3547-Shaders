@@ -1,0 +1,391 @@
+\documentclass[onecolumn]{article}
+%\usepackage{url}
+%\usepackage{algorithmic}
+\usepackage[a4paper]{geometry}
+\usepackage{datetime}
+\usepackage[margin=2em, font=small,labelfont=it]{caption}
+\usepackage{graphicx}
+\usepackage{mathpazo} % use palatino
+\usepackage[scaled]{helvet} % helvetica
+\usepackage{microtype}
+\usepackage{amsmath}
+\usepackage{subfigure}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\makeatletter
+\renewcommand{\title}[1]{\renewcommand{\@title}{\color{\@titlecolor}#1}}
+\newcommand{\@titlecolor}{red!75!black}
+\newcommand{\titlecolor}[1]{\renewcommand{\@titlecolor}{#1}}
+\makeatother
+
+\usepackage{listings} 
+\usepackage{color}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=python,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=2
+}
+
+\documentclass[12pt]{article}
+\usepackage[many]{tcolorbox}
+\usepackage{marginnote}
+\usepackage{kantlipsum}
+\tcbuselibrary{skins,breakable}
+\newtcolorbox{story}[1][]{
+    width=\textwidth,
+    colback=magenta!20,
+    colframe=red!75!black,
+    colbacktitle=blue!75!black,
+    fonttitle=\bfseries,
+    left=0ex,
+    right=0ex,
+    top=0pt,
+    arc=0pt,
+    outer arc=0pt,
+    leftrule=0pt,
+    rightrule=0pt,
+    toprule=0pt,
+    bottomrule=0pt,
+    breakable,
+    enhanced jigsaw,
+    title= #1}
+
+
+
+
+% Letterspacing macros
+\newcommand{\spacecaps}[1]{\textls[200]{\MakeUppercase{#1}}}
+\newcommand{\spacesc}[1]{\textls[50]{\textsc{\MakeLowercase{#1}}}}
+
+\title{\spacecaps{CENG 3547 \\Computer Graphics \\HW2  \\FIXED FUNCTION PIPELINE VS PROGRAMMABLE SHADERS}\\ 
+\color{blue!75!black}
+\normalsize
+\spacesc{} }
+
+\author{Gizem PESEN\\pesengizem@gmail.com\\
+github : \textbf{https://github.com/gizempesen/Ceng3547Shaders }}
+%\date{\today\\\currenttime}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Fixed function pipeline details}
+\label{sec:1}
+
+\begin{itemize}
+\color{blue!75!black}
+\item \hyperref[sec:1.0.1]{Traditional processing}
+\item \hyperref[sec:1.0.2]{Vertex arrays}
+\item \hyperref[sec:1.0.3]{Shading}
+\item \hyperref[sec:1.0.4]{Texturing}
+\end{itemize}
+
+\noindent
+{\color{red} \rule{\linewidth}{0.5mm} }
+
+\subsubsection{Fixed function pipeline}\label{sec:1}
+
+\begin{story}[Fixed function pipeline]
+A graphics processing pipeline with a fixed set of processing stages that cannot be modified by a programmer.\\ Data for an image passes through a sequence of processing stages, with the image as the end product. The sequence is called a \textbf{"pipeline."} With a fixed-function pipeline, the programmer can enable and disable stages and set options that control the processing but cannot add to the functionality. 
+\end{story}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=10cm]{fixedfunctionpipeline.png}
+\caption{Fixed Function  Pipeline \label{}}
+\end{figure}
+
+\subsubsection{Traditional processing }\label{sec:1.0.1}
+
+In software engineering, a pipeline consists of a chain of processing elements (processes, threads, coroutines, functions, etc.), arranged so that the output of each element is the input of the next; the name is by analogy to a physical pipeline. Usually some amount of buffering is provided between consecutive elements. The information that flows in these pipelines is often a stream of records, bytes, or bits, and the elements of a pipeline may be called filters; this is also called the pipes and filters design pattern. Connecting elements into a pipeline is analogous to function composition.
+
+\subsubsection{Vertex arrays }\label{sec:1.0.2}
+\begin{story}[VAO]
+A \textbf{Vertex Array Object} (or VAO) is an object that describes how the vertex attributes are stored in a Vertex Buffer Object (or VBO). This means that the VAO is not the actual object storing the vertex data, but the descriptor of the vertex data. 
+\end{story}
+\\\textbf{Vertex attributes }can be described by the glVertexAttribPointer function and its two sister functions \textbf{glVertexAttribIPointer} and \textbf{glVertexAttribLPointer}, the first of which we’ll explore below.
+
+
+
+\subsubsection{Shading }\label{sec:1.0.3}
+
+\begin{story}[shader]
+A program to be executed at some stage of the rendering pipeline. OpenGL shaders are written in the GLSL programming languages. For WebGL, only vertex shaders and fragment shaders are supported \marginnote{ } for demo.
+\end{story}
+\\
+The shading pipeline is the list of rendering passes performed at the camera level to produce an image. Graphical data are attached to the camera itself. Therefore, we 'render' the contents of a camera, and the produced result is positioned in the window that is hosting the camera. The viewpoint render list to which the camera has been attached defines the viewport information of the camera in the window.\\
+
+The way geometries (meshes, lines, texts, etc...) are rendered on screen is defined by the contents of the material applied to the shapes. Each material can use a number of rendering passes, as shown by the schema below:
+
+
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=10cm]{shading.png}
+\caption{Shading \label{}}
+\end{figure}
+
+\\\\
+\subsubsection{Texturing }\label{sec:1.0.4}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=7cm]{texture.png}
+\caption{There are a few texture targets : \url{GL_TEXTURE_1D},\url{GL_TEXTURE_2D},\url{ GL_TEXTURE_3D}, \url{GL_TEXTURE_CUBE_MAP}. \label{}}
+\end{figure}
+
+.\\\\
+\section{Programmable shaders details}
+\label{sec:2}
+
+\begin{itemize}
+\color{blue!75!black}
+\item \hyperref[sec:2.0.1]{History of shaders}
+\item \hyperref[sec:2.0.2]{ GPU and performance}
+\item \hyperref[sec:2.0.4]{Vertex, fragment, tesellation, geometry shaders}
+\item \hyperref[sec:2.0.5]{GLSL} 
+\item \hyperref[sec:2.0.6]{Shading}
+\item  \hyperref[sec:2.0.7]{Texturing}
+\item \hyperref[sec:2.0.8]{Scientific visualization}
+\end{itemize}
+
+\subsubsection{History of shaders}
+\label{sec:2.0.1}
+
+\textbf{OpenGL} is \textbf{25} years old! Since the first release in \textbf{1992}, a lot has happened (and is still happening actually, with the newly released\textbf{ Vulkan API }and the 4.6 GL release) and consequently, before diving into the book, it is important to understand OpenGL API evolution over the years. If the first API (1.xx) has not changed too much in the first twelve years, a big change occurred in 2004 with the introduction of the dynamic pipeline (OpenGL 2.x), i.e. the use of shaders that allow to have direct access to the GPU. Before this version, OpenGL was using a\textbf{ fixed pipeline} that made it easy to rapidly prototype some ideas. It was simple but not very powerful because the user had not much control over the\textbf{ graphic pipeline}. This is the reason why it has been deprecated more than ten years ago and you don't want to use it today. Problem is that there are a lot of tutorials online that still use this fixed pipeline and because most of them were written before \textbf{modern GL}, they're not even aware (and cannot) that they use a deprecated API.
+
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=10cm]{openglhistory.png}
+\caption{History \label{}}
+\end{figure}
+\\
+
+\subsubsection{GPU and performance}\label{sec:2.0.2}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=12cm]{programmingshadersinsidegpu.png}
+\caption{Programming Shaders in GPU \label{}}
+\end{figure}
+
+The pipeline, at the very highest level, can be broken into two parts: the CPU and the GPU. Although CPU optimization is a critical part of optimizing your application, it will not be the focus of this chapter, because much of this optimization has little to do with the graphics pipeline.\\
+Figure  shows that within the GPU, there are a number of functional units operating in parallel, which essentially act as separate special-purpose processors, and a number of spots where a bottleneck can occur. These include vertex and index fetching, vertex shading (transform and lighting, or T&L), fragment shading, and raster operations (ROP).\\\\
+
+
+
+
+\subsubsection{Vertex, fragment, tesellation, geometry shaders}\label{sec:2.0.4}
+
+\textbf{Programmable Vertex Processor}\\
+The vertex processor is a programmable unit that operates on incoming vertex attributes, such as position, color, texture coordinates, and so on. The vertex processor is intended to perform traditional graphics operations such as vertex transformation, normal transformation/normalization, texture coordinate generation, and texture coordinate transformation.\\
+The vertex processor only has one vertex as input and only writes one vertex as output. Topological information of the vertices is not available.\\\\
+\textbf{Programmable Geometry Processor}\\
+The greometry processor allows access to the geometry (lines, triangles, quads etc.). It is even possible to create new geometry. However, the geometry shader is not part of the OpenGL Shading Language specification. It is a multivendor extension and currently available (for developers) on NVidia GeForce 8 series graphics cards. Because this is a very important extension to the OpenGL Shading Language it is mentioned here and in some tutorials.\\\\
+\textbf{Programmable Fragment Processor}\\
+The fragment processor is intended to perform traditional graphics operations such as operations on interpolated values, texture access, texture application, fog, and color sum.\\\\
+\textbf{Tesellation:}
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=12cm]{programabletesellationshaders.png}
+\caption{Programable Tesellation Shaders \label{}}
+\end{figure}
+\\
+\begin{story}[Vertex Shader]
+A shader program that will be executed once for each vertex in a primitive. A vertex shader must compute the vertex coordinates in the clip coordinate system. It can also compute other properties, such as color.
+\end{story}
+.\\
+
+\begin{story}[Fragment Shader]
+A shader program that will be executed once for each pixel in a primitive. A fragment shader must compute a color for the pixel, or discard it. Fragment shaders are also called pixel shaders.
+\end{story}
+
+\\
+\subsubsection{GLSL}\label{sec:2.0.5}
+
+\begin{story}[Glsl]
+\textbf{OpenGL Shading Language (GLSL) }is a high-level shading language with a syntax based on the C programming language. It was created by the OpenGL ARB (OpenGL Architecture Review Board) to give developers more direct control of the graphics pipeline without having to use ARB assembly language or hardware-specific languages.\marginnote{ } for demo.
+\end{story}
+
+\subsubsection{Shading and Texturing}\label{sec:2.0.6}\label{sec:2.0.7}
+The fixed-function pipeline is as the name suggests the functionality is fixed. So someone wrote a list of different ways you'd be permitted to transform and rasterise geometry, and that's everything available. In broad terms, you can do linear transformations and then rasterise by texturing, interpolate a colour across a face, or by combinations and permutations of those things. But more than that, the fixed pipeline enshrines certain deficiencies.\\
+
+For example, it was obvious at the time of design that there wasn't going to be enough power to compute lighting per pixel. So lighting is computed at vertices and linearly interpolated across the face.\\
+
+There were some intermediate extensions related to specific effects — dot3 plus cubemaps for per-pixel lighting from a single source, for example — but the programmable pipeline lets you do whatever you want at each stage, giving you complete flexibility.\\
+
+In the first place that allowed better lighting, then better general special effects (ripples on reflective water, imperfect glass, etc), and more recently has been used for things like deferred rendering that flip the pipeline on its end.\\
+
+All support for the fixed-functionality pipeline is implemented by programming the programmable pipeline on hardware of the last decade or so. The programmable pipeline is an advance on its predecessor, afforded by hardware improvements.\\
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=10cm]{programmableshading.png}
+\caption{ Shading \label{}}
+\end{figure}
+
+
+
+\subsubsection{Scientific visualization}\label{sec:2.0.8}
+
+Although OpenGL is widely known for its use in games, it has also many other applications. One of these is the visualization of scientific data. Technically, there is not a great difference between drawing datasets and drawing game graphics, but the emphasis is different. Instead of a perspective view of our data, the scientist usually wants an orthographic view. Instead of specular highlights, reflections and shadow, scientific data is usually presented with primary colors and just a bit of smooth shading. \\\\It may sound like only simple OpenGL features are used, but in return a scientist wants the data rendered with a high accuracy, without any artifacts, and without arbitrary clipping of geometry or lighting. Also, raw data might need a lot of transformation before it can be rendered, and these transformations cannot always be implemented as matrix multiplications. Before the advent of the programmable shaders, scientific visualisation was lot harder to do on graphics cards.
+
+
+.\\\textbf{Last:}\\\\
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=10cm]{vs.jpg}
+\caption{ vs \label{}}
+\end{figure}
+
+
+
+\\
+\section{OpenGL ES}
+\label{sec:4}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=10cm]{opengl_es.jpg}
+\caption{OpenGL ES \label{}}
+\end{figure}
+\begin{story}[OpenGL ES]
+\textbf{OpenGL ES }is an \textbf{“embeddable subset”} of OpenGL. It slims down the rather large OpenGL API to the bare essentials, so that it can be implemented on devices with simpler, cheaper hardware, and above all, low enough power requirements to run on batteries. For example, it is available as standard on smartphones running both Apple’s IOS and Google’s Android operating system.
+\end{story}
+
+\textbf{OpenGL ES Versus Regular OpenGL}
+
+\begin{itemize}
+\item No Begin/End grouping and associated calls for individually specifying vertex info: instead, you must use the xxxPointer calls to pass entire buffers of coordinates at a time, and then draw them with DrawArrays (selecting contiguous subarrays) or DrawElements (selecting individual array elements by index).
+\item Only 2D textures, no 3D or 1D.
+\item No support for polygons other than triangles.
+\item ES adds the option to specify coordinates etc as fixed-point values (calls with an x suffix) instead of floating-point (f suffix).
+\item On some platforms (e.g. Android GLES 2.0) there is no OpenGL error queue storage, only last error is stored.
+\end{itemize}
+
+\\
+\section{WebGL}
+\label{sec:4}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=10cm]{webgl.png}
+\caption{webgl \label{}}
+\end{figure}
+\begin{story}[WebGL]
+\textbf{WebGL (Web Graphics Library) }is a JavaScript API for rendering interactive 2D and 3D graphics within any compatible web browser without the use of plug-ins.
+\end{story}
+\\WebGL is fully integrated with other web standards, allowing GPU-accelerated usage of physics and image processing and effects as part of the web page canvas. WebGL elements can be mixed with other HTML elements and composited with other parts of the page or page background. WebGL programs consist of control code written in JavaScript and shader code that is written in \textbf{OpenGL ES Shading Language (GLSL ES)}, a language similar to C or C++, and is executed on a computer's graphics processing unit (GPU). 
+
+
+
+
+\section{References}
+\noindent
+{\color{red} \rule{\linewidth}{0.5mm} }
+
+\textbf{sec:1.0.1}
+\begin{itemize}
+\item  \url{https://www.sciencedirect.com/topics/computer-science/fixed-function-pipeline}
+\item \url{https://www.khronos.org/opengl/wiki/Fixed_Function_Pipeline}  
+\item \url{https://www.sciencedirect.com/topics/computer-science/fixed-function-pipeline} 
+\end{itemize}
+
+\textbf{sec:1.0.2}
+
+\begin{itemize}
+\item \url{https://en.wikipedia.org/wiki/Pipeline_(software)} 
+\end{itemize}
+
+\textbf{sec:1.0.3}
+\begin{itemize}
+\item \url{http://www.songho.ca/opengl/gl_vertexarray.html} 
+\item \url{https://www.cs.utexas.edu/~theshark/courses/cs354/lectures/cs354-11.pdf} 
+\end{itemize}
+
+\textbf{sec:1.0.4}
+\begin{itemize}
+\item \url{http://math.hws.edu/graphicsbook/c6/s1.html}
+\item \url{http://www.downloads.redway3d.com/downloads/public/documentation/bk_bm_the_shading_pipeline.html}
+\end{itemize}
+
+\textbf{sec:1.0.5}
+\begin{itemize}
+\item \url{http://web.cse.ohio-state.edu/~shen.94/781/Site/Slides_files/pipeline.pdf}
+\item \url{https://stackoverflow.com/questions/30476888/fixed-pipeline-texture-rendering}
+\end{itemize}
+
+\textbf{sec:2.0.1}
+\begin{itemize}
+\item \url{https://www.labri.fr/perso/nrougier/python-opengl/}
+\end{itemize}
+
+\textbf{sec:2.0.2}
+\begin{itemize}
+\item \url{https://www.eecg.utoronto.ca/~moshovos/ACA05/read/GPU-micro.pdf}
+\item \url{https://developer.download.nvidia.com/books/HTML/gpugems/gpugems_ch28.html}
+\item \url{http://graphics.stanford.edu/courses/cs148-10-fall/lectures/programmable.pdf}
+\item \url{http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.518.899&rep=rep1&type=pdf}
+\end{itemize}
+
+\textbf{sec:2.0.4}
+\begin{itemize}
+\item \url{https://en.wikipedia.org/wiki/Shader}
+\end{itemize}
+
+\textbf{sec:2.0.5}
+\begin{itemize}
+\item \url{https://en.wikipedia.org/wiki/OpenGL_Shading_Language}
+\item \url{https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/By_example/Hello_GLSL}
+\item \url{https://stackoverflow.com/questions/18950395/}
+\item \url{https://castle-engine.io/x3d_implementation_shaders.php#section_uniforms_tex}
+\item \url{https://sites.google.com/site/face2manoj/opengl/pipeline}
+\end{itemize}
+
+\textbf{sec:2.0.7}
+\begin{itemize}
+\item \url{https://en.wikibooks.org/wiki/OpenGL_Programming/Scientific_OpenGL_Tutorial_01}
+\end{itemize}
+
+\textbf{sec:2.0.8}
+\begin{itemize}
+\item \url{https://www.slideshare.net/NicolasRougier1/opengl-scientific-visualization}
+\end{itemize}
+
+\textbf{sec:3}
+\begin{itemize}
+\item \url{https://www.khronos.org/opengl/wiki/OpenGL_ES} \end{itemize}
+
+\textbf{sec:4}
+\begin{itemize}
+\item \url{https://en.wikipedia.org/wiki/WebGL} 
+\item \url{https://www.khronos.org/webgl/} 
+\end{itemize}
+
+\textbf{sec:5}
+\begin{itemize}
+\item \url{https://community.khronos.org/t/fixed-function-pipeline-vs-shaders/74117} 
+\item \url{https://stackoverflow.com/questions/30476888/fixed-pipeline-texture-rendering} 
+\end{itemize}
+ 
+\nocite{*}
+\bibliographystyle{plain}
+\bibliography{references}
+\end{document}
